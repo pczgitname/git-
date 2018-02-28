@@ -147,7 +147,25 @@
 		
 	</div>
 </div>
+
+<div id="cartoon">
+	<div class="row carousel slide col-sm-2 column">
+		<a href="#" style="color: black;"><h2>动画</h2></a>
+	</div>
 	
+</div>
+<div id="dance">
+	<div class="row carousel slide col-sm-2 column">
+		<a href="#" style="color: black;"><h2>舞蹈</h2></a>
+	</div>
+	
+</div>
+<div id="music">
+	<div class="row carousel slide col-sm-2 column">
+		<a href="#" style="color: black;"><h2>音乐</h2></a>
+	</div>
+	
+</div>
 
 
 
