@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context" 
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"  
+	xmlns:jee="http://www.springframework.org/schema/jee" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.2.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.2.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
+		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.2.xsd">
+	
+	<!-- spring整合数据库配置信息 -->
+	<!-- 1.引入连接配置文件 -->
+	<util:properties id="props" location="classpath:db.properties"></util:properties>
+
+
+	<!-- 2.配置数据源 -->
+	<!-- <bean id="datasource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="#{props.driver}"></property>
+		<property name="url" value="#{props.url}"></property>
+		<property name="username" value="#{props.username}"></property>
+		<property name="password" value="#{props.password}"></property>
+	</bean> -->
+	<bean id="datasource" class="com.alibaba.druid.pool.DruidDataSource">
+		<property name="driverClassName" value="#{props.driver}"></property>
+		<property name="url" value="#{props.url}"></property>
+		<property name="username" value="#{props.username}"></property>
+		<property name="password" value="#{props.password}"></property>
+		<!-- 连接池属性配置  初始化连接数,最大,最小连接数 -->
+		<property name="initialSize" value="5"></property>
+		<property name="minIdle" value="5"></property>
+		<property name="maxActive" value="10"></property>
+		<!-- 获取连接等待超时时间 单位毫秒 -->
+		<property name="maxWait" value="60000"></property>
+		<!-- 间隔多久进行一次检测,检测需要关闭的空闲连接,单位是毫秒 -->
+		<property name="timeBetweenEvictionRunsMillis" value="60000"></property>
+		<!-- 连接在连接池中的最小生存时间 -->
+		<property name="minEvictableIdleTimeMillis" value="300000"></property>
+		<!-- 配置监控统计拦截的filters -->
+		<property name="filters" value="stat"/>
+	</bean>
+	
+	
+	<!-- 3.配置mybatis-spring整合包中提供的 sessionFactoryBean
+		,该组件的作用是用于读取数据源配置等信息,创建SqlSessionFactory
+	 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="datasource"></property>
+		<!-- 配置mapper映射文件 -->
+		<property name="mapperLocations" value="classpath:com.chinasofti.lenotes.dao.*.xml"></property>
+		<property name="typeAliasesPackage" value="com.chinasofti.lenotes.entity"></property>
+		<!-- 配置分页插件 -->
+		<property name="plugins">
+			<array>
+			<!-- 分页插件是通过拦截器实现的 -->
+				<bean class="com.github.pagehelper.PageInterceptor">
+					<property name="properties">
+						<!-- 指定方言,根据方言生成相应的sql语句 -->
+						<value>helperDialect=mysql</value>
+					</property>
+				</bean>
+			</array>
+		</property>
+	</bean>
+	<!-- 4.配置MapperFactoryBean或者MapperScannerConfigurer
+		根据sqlSession工厂生产出sqlSession,并且注入到其属性上
+		并且根据mapper映射文件创建出子实现类
+	 -->
+<!-- 	<bean id="mapperFactoryBean" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	 	<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	 	<property name="mapperInterface" value="com.chinasofti.lenotes.dao.DishesInfoDao"></property>
+	 </bean> -->
+	 
+	 
+	 
+	 <!--可以实现自动扫描包下的所有接口创建对象
+	 	 basePackage:指定哪个包和其子包下的类需要被扫描
+	 	 当指定了扫描包后,spring会自动找到该包下的接口类,并且根据其全限定名,
+	 	 找到mapper映射中的namespace与其一直的映射配置,再找到对应的sql语句执行 	
+	 	 annotationClass:指定自定义注解表积累  设置了该属性后,只有带有注解标记的mapper接口,才会被扫描到,并创建子实现类
+	  -->
+	 <bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		 <!-- spring会自动找到该bean并且注入 -->
+<!-- 		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property> -->
+	 	<property name="basePackage" value="com.chinasofti.lenotes.dao"></property>
+	 	<property name="annotationClass" value="com.chinasofti.lenotes.dao.MyBatisAnnotation"></property>
+	 </bean>
+
+</beans>

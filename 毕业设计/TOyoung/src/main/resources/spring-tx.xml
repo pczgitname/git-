@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context" 
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"  
+	xmlns:jee="http://www.springframework.org/schema/jee" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.2.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.2.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
+		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.2.xsd">
+	
+	<!-- spring整合mybatis声明式事务管理 -->
+	<!-- 1.设置spring提供的事务管理器bean(切面组件) -->
+	<bean id="tx" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<!-- 事务管理需要使用jdbc的连接的api操作,所以需要配置数据源 -->
+		<property name="dataSource" ref="datasource"></property>
+	</bean>
+	<!-- 2.开启事务注解 -->
+<!-- 	<tx:annotation-driven transaction-manager="tx" proxy-target-class="true"/> -->
+	<!-- 3.在类中通过事务配置来开启事务的管理(切面配置)
+		事务是从服务层打开,也在服务层结束
+		两步:a.配置事务的类型和事务策略等
+			b.配置切入点
+		id="txAvice":设置当前组件bean的id
+		transaction-manager:指定事务管理器组件
+		tx:attributes:事务属性设置
+	 -->
+	<tx:advice id="txAvice" transaction-manager="tx">
+		<tx:attributes>
+		<!-- 
+			事务是以方法为单位的,所以下面的设置就是设置哪类方法执行的事务策略
+			name:匹配方法
+			read-only:只读和非只读事务  只有查询才能用只读事务
+			propagation:事务传播的策略  默认是REQUIRED 表示当前方法如果没有事务就会启动一个事务,
+			如果有事务则加入到事务中
+			rollback-for:默认只有检查异常会回滚,指定哪些非检查异常也要进行事务回滚
+		 -->
+			<tx:method name="find*" read-only="true" propagation="REQUIRED" rollback-for=""/>
+			<tx:method name="get*" read-only="true" propagation="REQUIRED" rollback-for=""/>
+			<tx:method name="*" read-only="false" propagation="REQUIRED" rollback-for="Exception"/>
+		</tx:attributes>
+	</tx:advice>
+	<!-- 
+		aop:config  aop设置,用于指定哪些扫描到的方法,使用上面设置好的事务设置进行事务管理
+		proxy-target-class:是否开启动态代理
+		aop:advisor:配置切入点表达式和事务设置
+		advice-ref:引用上面配置好的事务设置
+		pointcut:配置切入点表达式,注意一定要设置对,如果不对会引发事务混乱
+	 -->
+	<aop:config proxy-target-class="true">
+		<aop:advisor advice-ref="txAvice" pointcut="within(com.chinasofti.lenotes.service..*)"/>
+	</aop:config>
+
+</beans>

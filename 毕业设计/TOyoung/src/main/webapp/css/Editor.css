@@ -1,0 +1,71 @@
+a{
+			color: #3C3C3C ;
+		}
+		
+.Editorbox{
+			min-height: 600px;
+			background-color: #FFFFFF;			
+			margin: 0px;
+			padding: 0px;
+			overflow: auto;			
+		}
+
+
+.border1{
+	position:relative;
+	z-index: 10001;
+	box-shadow: 5px 0px 20px lightgray;
+}
+.border2{
+	position:relative;
+	z-index: 1;
+	box-shadow: 5px 0px 20px lightgray;
+}
+
+#search{
+	height: 34px;
+}
+.search{
+	height: 60px;
+	border-bottom:1px solid #C0C0C0;
+}
+
+#title{
+	font-size: 26px;
+	border: 0px;
+	background-color:#FFFFFF;
+	outline: none;
+	width: 90%;
+}
+
+
+#edit2{
+	background-color:white;
+	box-shadow:0px 0px 10px #707070;
+	overflow:hidden;
+}
+
+.note{
+	height: 120px;
+	border-bottom:solid 1px #C0C0C0 ;
+	padding: 5%;
+	cursor: pointer;
+}
+
+.p1{
+	margin-left:15px; 
+	overflow: hidden; 
+	text-overflow:ellipsis;
+	 white-space: nowrap;
+}
+
+.nav{
+	cursor: pointer;
+}
+
+#tag2 li a{
+	font-size: 12px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 20px;
+}

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!-- mybatis主配置文件  配置连接数据库和加载关系映射文件等 -->
+<configuration>
+	<!-- 属性设置,用于设置通过哪些配置文件读取连接信息
+		resource:直接指定某个配置文件
+	 -->
+<!-- 	<properties resource="db.properties"></properties> -->
+	<!-- 设置别名,可以简化他映射文件中的全限定类名的编写
+		 typeAlias:指定某个类型的别名
+		 package:直接指定当前包下的所有类都可以省略全限定名,即只写类名就可以
+	 -->
+<!-- 	<typeAliases> -->
+<!-- 		<package name="com.chinasofti.entity"/> -->
+<!-- 	</typeAliases> -->
+	
+	
+	<!--环境配置  可以配置多个数据库连接配置
+		default:填写的是某个环境的id,表示默认使用该配置	
+	 -->
+<!-- 	<environments default="environment"> -->
+		<!--设置数据库的配置信息 信息可以是写死的配置,也可以读取配置文件获取
+			transactionManager:事务管理器 type指定事务管理器类型  
+			JDBC表示使用默认原来的jdbc事务管理
+			MANAGED 不使用事务管理
+			
+			dataSource:数据源,即连接信息
+			type指定连接方式  POOLED表示预先获取一部分连接,每次会从该连接池中拿连接,
+			使用完连接后,会把连接返还给连接池,连接不会真正关闭(连接池)
+		-->
+<!-- 		<environment id="environment"> -->
+<!-- 			<transactionManager type="JDBC"></transactionManager> -->
+<!-- 			<dataSource type="POOLED"> -->
+<!-- 				<property name="driver" value="${driver}"/> -->
+<!-- 				<property name="url" value="${url}"/> -->
+<!-- 				<property name="username" value="${username}"/> -->
+<!-- 				<property name="password" value="${password}"/> -->
+<!-- 			</dataSource> -->
+<!-- 		</environment> -->
+<!-- 	</environments> -->
+	
+	
+	
+	
+	<!-- 引入映射配置文件  如果不引入,会引发mapper映射异常 -->
+<!-- 	<mappers> -->
+		<!-- 引入数据库与实体类之间的关系映射的配置文件 -->
+<!-- 		<mapper resource="com/chinasofti/entity/deptMapper.xml"/> -->
+<!-- 	</mappers> -->
+</configuration>
