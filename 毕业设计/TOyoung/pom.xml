@@ -6,14 +6,296 @@
   <version>0.0.1-SNAPSHOT</version>
   <name>maven_demo Maven Webapp</name>
   <url>http://maven.apache.org</url>
+ 
+ <!-- 依赖 jar包管理
+ 	通过设置依赖，maven会自动从本地仓库中寻找jar包,并导入项目,如果本地仓库中不存在，则会
+ 	通过配置好的镜像设置,从中央仓库或者远程仓库中寻找jar包 
+   -->
   <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
+  
+	<!-- ehcache缓存所需要的包 -->
+  <!-- https://mvnrepository.com/artifact/org.springframework/spring-context-support -->
+<dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-context-support</artifactId>
+    <version>${spring.version}</version>
+</dependency>
+	<!-- https://mvnrepository.com/artifact/net.sf.ehcache/ehcache -->
+<dependency>
+    <groupId>net.sf.ehcache</groupId>
+    <artifactId>ehcache</artifactId>
+    <version>2.10.1</version>
+</dependency>
+	<!-- https://mvnrepository.com/artifact/net.sf.ehcache/ehcache-core -->
+<dependency>
+    <groupId>net.sf.ehcache</groupId>
+    <artifactId>ehcache-core</artifactId>
+    <version>2.6.11</version>
+</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.aspectj/aspectjrt -->
+<dependency>
+    <groupId>org.aspectj</groupId>
+    <artifactId>aspectjrt</artifactId>
+    <version>1.8.10</version>
+</dependency>
+  	<!-- spring IOC 功能 -->
+  	
+<!--   	<dependency> -->
+<!--         <groupId>org.springframework</groupId> -->
+<!--         <artifactId>spring-context</artifactId> -->
+<!--         <version>${spring.version}</version> -->
+<!--     </dependency> -->
+  	
+  	<!-- https://mvnrepository.com/artifact/org.springframework/spring-aop -->
+<!-- 	<dependency> -->
+<!-- 	    <groupId>org.springframework</groupId> -->
+<!-- 	    <artifactId>spring-aop</artifactId> -->
+<!-- 	    <version>${spring.version}</version> -->
+<!-- 	</dependency> -->
+  	
+
+  	
+  	<!-- 引入servlet 依赖 -->
+  	<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
+	<dependency>
+	    <groupId>javax.servlet</groupId>
+	    <artifactId>javax.servlet-api</artifactId>
+	    <version>3.1.0</version>
+	    <!-- 在项目中，可能会出现多次引用相同的jar的情况，scope用来指定检索jar -->
+	    <!--从当前工程依赖中查找，没有才引入进来  -->
+	    <scope>provided</scope>
+	</dependency>
+  	
+  	<!-- 引入JSTL 依赖 -->
+  	<!-- https://mvnrepository.com/artifact/javax.servlet/jstl -->
+	<dependency>
+	    <groupId>javax.servlet</groupId>
+	    <artifactId>jstl</artifactId>
+	    <version>1.2</version>
+	</dependency>
+	
+	<!-- spring功能 web-mvc 容器 aop 测试 -->
+  	<!-- https://mvnrepository.com/artifact/org.springframework/spring-webmvc -->
+	<dependency>
+	    <groupId>org.springframework</groupId>
+	    <artifactId>spring-webmvc</artifactId>
+	    <version>${spring.version}</version>
+	</dependency>
+  	
+  	<!-- spring整合mybatis的   包括了orm功能和事务管理功能 -->
+  	<!-- https://mvnrepository.com/artifact/org.springframework/spring-orm -->
+	<dependency>
+	    <groupId>org.springframework</groupId>
+	    <artifactId>spring-orm</artifactId>
+	    <version>${spring.version}</version>
+	</dependency>
+	
+	<!-- 织入功能   aop实现需要使用的依赖 -->
+	<!-- https://mvnrepository.com/artifact/org.springframework/spring-aspects -->
+	<dependency>
+	    <groupId>org.springframework</groupId>
+	    <artifactId>spring-aspects</artifactId>
+	    <version>${spring.version}</version>
+	</dependency>
+	
+	<!-- spring test模块功能 -->
+	<!-- https://mvnrepository.com/artifact/org.springframework/spring-test -->
+	<dependency>
+	    <groupId>org.springframework</groupId>
+	    <artifactId>spring-test</artifactId>
+	    <version>${spring.version}</version>
+	    <scope>test</scope>
+	</dependency>
+  	
+  	<!-- Mybatis依赖 -->
+  	<!-- https://mvnrepository.com/artifact/org.mybatis/mybatis -->
+	<dependency>
+	    <groupId>org.mybatis</groupId>
+	    <artifactId>mybatis</artifactId>
+	    <version>3.4.1</version>
+	</dependency>
+  	
+  	<!-- https://mvnrepository.com/artifact/org.mybatis/mybatis-spring -->
+	<dependency>
+	    <groupId>org.mybatis</groupId>
+	    <artifactId>mybatis-spring</artifactId>
+	    <version>1.3.0</version>
+	</dependency>
+  	
+  	<!-- 分页插件 -->
+  	<dependency>
+	    <groupId>com.github.pagehelper</groupId>
+	    <artifactId>pagehelper</artifactId>
+	    <version>5.0.0</version>
+	</dependency>
+	
+	<!-- https://mvnrepository.com/artifact/com.github.miemiedev/mybatis-paginator -->
+	<dependency>
+	    <groupId>com.github.miemiedev</groupId>
+	    <artifactId>mybatis-paginator</artifactId>
+	    <version>1.2.17</version>
+	</dependency>
+	
+  	<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+	<!-- 引入mysql jar依赖 -->
+	<dependency>
+	    <groupId>mysql</groupId>
+	    <artifactId>mysql-connector-java</artifactId>
+	    <version>5.1.23</version>
+	</dependency>
+	
+	<dependency>
+	    <groupId>com.alibaba</groupId>
+	    <artifactId>druid</artifactId>
+	    <version>1.1.3</version>
+	</dependency>
+	
+	
+	
+	
+	
+  	<!-- https://mvnrepository.com/artifact/log4j/log4j -->
+	<dependency>
+	    <groupId>log4j</groupId>
+	    <artifactId>log4j</artifactId>
+	    <version>1.2.17</version>
+	</dependency>
+	
+  	<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
+	<dependency>
+	    <groupId>org.slf4j</groupId>
+	    <artifactId>slf4j-api</artifactId>
+	    <version>1.7.21</version>
+	</dependency>
+  	
+  	<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-log4j12 -->
+	<dependency>
+	    <groupId>org.slf4j</groupId>
+	    <artifactId>slf4j-log4j12</artifactId>
+	    <version>1.7.21</version>
+	    <scope>test</scope>
+	</dependency>
+  	
+  	
+  	<!-- https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload -->
+	<dependency>
+	    <groupId>commons-fileupload</groupId>
+	    <artifactId>commons-fileupload</artifactId>
+	    <version>1.3.1</version>
+	</dependency>
+	
+  	<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+	<dependency>
+	    <groupId>commons-io</groupId>
+	    <artifactId>commons-io</artifactId>
+	    <version>2.4</version>
+	</dependency>
+  	
+  	<!-- https://mvnrepository.com/artifact/junit/junit -->
+	<dependency>
+	    <groupId>junit</groupId>
+	    <artifactId>junit</artifactId>
+	    <version>4.12</version>
+	    <scope>test</scope>
+	</dependency>
+  	
+  	<!-- json串与java对象转换依赖包 -->
+  	<!-- https://mvnrepository.com/artifact/net.sf.json-lib/json-lib -->
+	<dependency>
+	    <groupId>net.sf.json-lib</groupId>
+	    <artifactId>json-lib</artifactId>
+	    <version>2.4</version>
+	    <classifier>jdk15</classifier>
+	</dependency>
+	
+  	<!-- <dependency>
+	    <groupId>com.google.code.kaptcha</groupId>
+	    <artifactId>kaptcha</artifactId>
+	    <version>2.3.2</version>
+	</dependency> -->
+	
+	<!-- 验证码插件功能依赖 -->
+	<dependency>  
+   	<groupId>com.github.penggle</groupId>  
+    	<artifactId>kaptcha</artifactId>  
+    	<version>2.3.2</version>  
+	</dependency>
+  	<!-- 邮件功能依赖 -->
+  	<dependency>
+	    <groupId>javax.mail</groupId>
+	    <artifactId>mail</artifactId>
+	    <version>1.4.7</version>
+	</dependency>
+  	<!-- json转换器 -->
+  	<dependency>
+    <groupId>org.codehaus.jackson</groupId>
+    <artifactId>jackson-mapper-asl</artifactId>
+    <version>1.9.13</version>
+	</dependency>
+	<dependency>
+	    <groupId>com.fasterxml.jackson.core</groupId>
+	    <artifactId>jackson-annotations</artifactId>
+	    <version>2.6.1</version>
+	</dependency>
+	<dependency>
+	    <groupId>com.fasterxml.jackson.core</groupId>
+	    <artifactId>jackson-core</artifactId>
+	    <version>2.6.1</version>
+	</dependency>
+	<dependency>
+	    <groupId>com.fasterxml.jackson.core</groupId>
+	    <artifactId>jackson-databind</artifactId>
+	    <version>2.6.1</version>
+	</dependency>
+	<dependency>
+    <groupId>com.alibaba</groupId>
+    <artifactId>fastjson</artifactId>
+    <version>1.2.7</version>
+	</dependency>
+	
+	<!-- <dependency>
+		<groupId>com.fasterxml.jackson.core</groupId>
+		<artifactId>jackson-databind</artifactId>
+		<version>2.7.4</version>
+	</dependency>
+
+	<dependency>
+		<groupId>com.fasterxml.jackson.core</groupId>
+		<artifactId>jackson-core</artifactId>
+		<version>2.7.4</version>
+	</dependency>
+	<dependency>
+		<groupId>com.fasterxml.jackson.core</groupId>
+		<artifactId>jackson-annotations</artifactId>
+		<version>2.7.4</version>
+	</dependency> -->
+  	
+  	<!-- 动态代理技术 -->
+  	<!-- https://mvnrepository.com/artifact/cglib/cglib -->
+<!-- 	<dependency> -->
+<!-- 	    <groupId>cglib</groupId> -->
+<!-- 	    <artifactId>cglib</artifactId> -->
+<!-- 	    <version>2.2</version> -->
+<!-- 	</dependency> -->
+  	
+  	
+  	
+
+  	
+<!--   	<dependency> -->
+<!-- 	    <groupId>junit</groupId> -->
+<!-- 	    <artifactId>junit-dep</artifactId> -->
+<!-- 	    <version>4.8.2</version> -->
+<!-- 	    <scope>test</scope> -->
+<!-- 	</dependency> -->
+  	
+  	
+
+  	
+  	
   </dependencies>
+ 
   <build>
     <finalName>maven_demo</finalName>
   </build>
